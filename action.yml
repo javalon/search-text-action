@@ -1,13 +1,27 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: 'Search text'
+description: 'Search a text in a response body during a limited period of time. If the text is found, the action will be successful.'
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
+  url:  
+    description: 'URL to search'
     required: true
-    default: '1000'
+  text:  
+    description: 'Text to search'
+    required: true
+  timeout:  
+    description: 'Timeout in seconds'
+    required: false
+    default: "60"
+  interval:  
+    description: 'Check every X seconds'
+    required: false
+    default: "5"
+  fail-if-not-found:  
+    description: 'If true, the action will fail if the text is not found'
+    required: false
+    default: 'true' 
 outputs:
-  time: # output will be available to future steps
-    description: 'The current time after waiting'
+  found:
+    description: 'True if the text is found, false otherwise'    
 runs:
   using: 'node16'
   main: 'dist/index.js'
