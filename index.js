@@ -1,3 +1,4 @@
+const core = require('@actions/core');
 const {getInputs, execute} = require('./lib/index.js');
 
 const inputs = getInputs();
