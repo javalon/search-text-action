@@ -1,21 +1,19 @@
-const core = require('@actions/core');
-const wait = require('./wait');
+const {getInputs, execute} = require('./lib/index.js');
 
+const inputs = getInputs();
 
-// most @actions toolkit packages have async methods
 async function run() {
   try {
-    const ms = core.getInput('milliseconds');
-    core.info(`Waiting ${ms} milliseconds ...`);
-
-    core.debug((new Date()).toTimeString()); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
-    await wait(parseInt(ms));
-    core.info((new Date()).toTimeString());
-
-    core.setOutput('time', new Date().toTimeString());
+    const result = await execute(inputs.url, inputs.text, inputs.timeout, inputs.interval);
+    core.setOutput('found', result);
+  if(inputs.fail_if_not_found) {
+    core.setFailed('The action ended without finding the search text.');
+  }
   } catch (error) {
     core.setFailed(error.message);
   }
 }
 
 run();
+
+
