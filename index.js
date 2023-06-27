@@ -7,7 +7,7 @@ async function run() {
   try {
     const result = await execute(inputs.url, inputs.text, inputs.timeout, inputs.interval);
     core.setOutput('found', result);
-  if(inputs.fail_if_not_found) {
+  if(!result && inputs.fail_if_not_found) {
     core.setFailed('The action ended without finding the search text.');
   }
   } catch (error) {
