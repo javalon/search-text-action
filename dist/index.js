@@ -10,7 +10,12 @@ const axios = __nccwpck_require__(8757);
 function checkUrl(url, text) {
   return new Promise((resolve, reject) => {
     axios.get(url).then((response) => {
-      resolve(response.data.includes(text));
+      const contentType = response.headers['content-type'];
+      var dataResponse = response.data;
+      if (contentType && contentType.includes('application/json')) {
+        dataResponse = JSON.stringify(response.data);
+      }
+      resolve(dataResponse.includes(text));
     }).catch((error) => {
       reject(error);
     });
@@ -23,7 +28,7 @@ function getInputs() {
     text: core.getInput('text', { required: true }),
     timeout: parseInt(core.getInput('timeout', { required: false })) || 600, // 10 minutes
     interval: parseInt(core.getInput('interval', { required: false })) || 1, // 1 second
-    fail_if_not_found: core.getInput('fail_if_not_found', { required: false }) != '' ? core.getBooleanInput('fail_if_not_found', { required: false }) : true
+    failIfNotFound: core.getInput('fail-if-not-found', { required: false }) != '' ? core.getBooleanInput('fail-if-not-found', { required: false }) : true
   }
 }
 
@@ -10615,17 +10620,16 @@ async function run() {
   try {
     const result = await execute(inputs.url, inputs.text, inputs.timeout, inputs.interval);
     core.setOutput('found', result);
-  if(!result && inputs.fail_if_not_found) {
-    core.setFailed('The action ended without finding the search text.');
-  }
+    if (!result && inputs.failIfNotFound) {
+      core.setFailed('The action ended without finding the search text.');
+    }
   } catch (error) {
+    core.setOutput('found', false);
     core.setFailed(error.message);
   }
 }
 
 run();
-
-
 
 })();
 
