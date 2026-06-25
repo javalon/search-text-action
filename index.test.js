@@ -1,6 +1,6 @@
-const nock = require('nock');
-const axios = require('axios');
-const {checkUrl, execute} = require('./lib/index.js');
+import nock from 'nock';
+import axios from 'axios';
+import { checkUrl, execute } from './lib/index.js';
 
 axios.defaults.adapter = 'http';
 

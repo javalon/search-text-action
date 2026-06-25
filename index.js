@@ -1,5 +1,5 @@
-const core = require('@actions/core');
-const {getInputs, execute} = require('./lib/index.js');
+import * as core from '@actions/core';
+import { getInputs, execute } from './lib/index.js';
 
 const inputs = getInputs();
 

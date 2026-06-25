@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "description": "Github action to search text in a response of a URL",
   "main": "index.js",
+  "type": "module",
   "engines": {
     "node": ">=24"
   },
   "scripts": {
     "lint": "eslint .",
     "prepare": "ncc build index.js -o dist --source-map --license licenses.txt",
-    "test": "jest",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "all": "npm run lint && npm run prepare && npm run test"
   },
   "repository": {
@@ -28,7 +29,7 @@
   },
   "homepage": "https://github.com/javalon/search-text-action#readme",
   "dependencies": {
-    "@actions/core": "^2.0.3",
+    "@actions/core": "^3.0.1",
     "axios": "^1.18.1"
   },
   "devDependencies": {
