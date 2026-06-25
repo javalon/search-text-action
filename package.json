@@ -1,8 +1,11 @@
 {
   "name": "search-text-action",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Github action to search text in a response of a URL",
   "main": "index.js",
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
     "lint": "eslint .",
     "prepare": "ncc build index.js -o dist --source-map --license licenses.txt",
